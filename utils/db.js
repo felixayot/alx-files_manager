@@ -1,5 +1,5 @@
 // Mongodb connection
-/* eslint-disabljue */
+/* eslint-disable */
 import { MongoClient } from 'mongodb';
 
 const DB_HOST = process.env.DB_HOST || 'localhost';
@@ -19,7 +19,7 @@ class DbClient {
       this.usersCollection = this.db.collection('users');
       this.filesCollection = this.db.collection('files');
     } catch (error) {
-      console.log('YOUR MACHINE LIKELY HAS NO MONGODB INSTALLED');
+      console.log('\nMONGODB IS LIKELY NOT RUNNING ON YOUR MACHINE:', error.message);
       this.db = false;
     }
   }
