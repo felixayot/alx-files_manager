@@ -28,7 +28,7 @@ class UsersController {
       await userQueue.add({});
       return res.status(500).send({ error: `User creation failed: ${error.message}` });
     }
-    const user = { _id: result.insertedId, email };
+    const user = { id: result.insertedId, email };
     await userQueue.add({ userId: result.insertedId.toString() });
 
     return res.status(201).send(user);
