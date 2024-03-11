@@ -1,5 +1,5 @@
 // Authentication controller
-const uuid = require('uuid');
+const uuid = require('uuid').v4;
 const dbClient = require('../utils/db');
 
 class AuthController {
