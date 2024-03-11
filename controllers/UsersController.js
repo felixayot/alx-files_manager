@@ -26,7 +26,7 @@ class UsersController {
     } catch (error) {
     // Add a job to the userQueue
       await userQueue.add({});
-      return res.status(500).send({ error: `User creation failed: ${error}` });
+      return res.status(500).send({ error: `User creation failed: ${error.message}` });
     }
     const user = { _id: result.insertedId, email };
     await userQueue.add({ userId: result.insertedId.toString() });
