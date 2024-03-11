@@ -9,7 +9,7 @@ class UserUtils {
     const token = request.header('X-Token');
     if (!token) return obj;
     obj.key = `auth_${token}`;
-    obj.userId = await redisClient.get(obj.key);
+    obj.userId = redisClient.get(obj.key);
     return obj;
   }
 
@@ -21,5 +21,4 @@ class UserUtils {
   */
 }
 
-const userUtils = new UserUtils();
-module.exports = userUtils;
+module.exports = UserUtils;
