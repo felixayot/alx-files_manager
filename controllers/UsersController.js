@@ -2,6 +2,7 @@
 const sha1 = require('sha1');
 const Queue = require('bull');
 const dbClient = require('../utils/db');
+const userUtils = require('../utils/user');
 
 const userQueue = new Queue('userQueue');
 
@@ -36,15 +37,14 @@ class UsersController {
 
   // GET users/me
   static async getMe(req, res) {
-    const token = req.header('X-Token');
-    if (!token) {
-      return res.status(401).send({ error: 'Unauthorized' });
-    }
-    const user = await dbClient.usersCollection.findOne({ token });
+    const { userId } = await userUtils.getUserIdAndKey(req);
+    const user = await dbClient.usersCollection.findOne({ _id: userId });
     if (!user) {
       return res.status(401).send({ error: 'Unauthorized' });
     }
-    return res.status(200).send({ id: user._id, email: user.email });
+    delete user.password;
+    delete user._id;
+    return res.status(200).send(user);
   }
 }
 
