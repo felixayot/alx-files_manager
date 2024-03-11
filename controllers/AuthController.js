@@ -27,7 +27,6 @@ class AuthController {
     const key = `auth_${token}`;
     const validFor = 24;
     await redisClient.set(key, user._id.toString(), validFor * 3600);
-    dbClient.usersCollection.update({ email, password }, { $set: { token } });
     return res.status(200).send({ token });
   }
 
