@@ -5,9 +5,10 @@ const mapRoutes = require('./routes/index');
 
 const PORT = process.env.PORT || 5000;
 
-const app = express.Router();
+const app = express();
 
-mapRoutes(app);
+app.use(express.json());
+app.use(mapRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
