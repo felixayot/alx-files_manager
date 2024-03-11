@@ -19,14 +19,14 @@ class UsersController {
       return res.status(400).send({ error: 'Already exist' });
     }
 
-    const hashedPassword = await sha1(password);
+    const hashedPassword = sha1(password);
     let result;
     try {
       result = await dbClient.usersCollection.insertOne({ email, password: hashedPassword });
     } catch (error) {
     // Add a job to the userQueue
       await userQueue.add({});
-      return res.status(500).send({ error: 'User creation failed.' });
+      return res.status(500).send({ error: `User creation failed: ${error}` });
     }
     const user = { _id: result.insertedId, email };
     await userQueue.add({ userId: result.insertedId.toString() });
