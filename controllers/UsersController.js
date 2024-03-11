@@ -42,9 +42,10 @@ class UsersController {
     if (!user) {
       return res.status(401).send({ error: 'Unauthorized' });
     }
-    delete user.password;
-    delete user._id;
-    return res.status(200).send(user);
+    const result = { id: user._id, ...user };
+    delete result.password;
+    delete result._id;
+    return res.status(200).send(result);
   }
 }
 
